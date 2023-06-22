@@ -13,20 +13,20 @@
 
     <!--Input-->
     <label for="auth">Authorization:</label><br>
-    <input type="password" id="auth"><br>
+    <input type="password" id="authfield"><br>
     <label for="url">URL:</label><br>
-    <input type="text" id="url">
-    <button>Random</button>
-    <button>Suicide</button><br>
+    <input type="text" id="urlfield">
+    <button onclick="buttonFillRandom()">Random</button>
+    <button onclick="buttonFillSuicide()">Suicide</button><br>
     <label for="value">Value:</label><br>
-    <input type="text" id="value">
-    <button>Clipboard</button><br><br>
-    <button>POST</button>
-    <button>DELETE</button>
+    <input type="text" id="valuefield">
+    <button onclick="buttonFillFromClipboard()">Clipboard</button><br><br>
+    <button onclick="buttonPostRequest()">POST</button>
+    <button onclick="buttonDeleteRequest()">DELETE</button>
     <button>OPTIONS</button><br><br>
-    <b>Result: </b><a>😺</a><br><br>
+    <b>Result: </b><a id="resultfield">😺</a><br><br>
     <button>Re-random & POST</button>
-    <button>Copy Result</button>
+    <button onclick="buttonCopyResult()">Copy Result</button>
     <hr>
 
     <!--Details-->
@@ -45,7 +45,13 @@
         2. Enter the shortened URL (without etyd.cc/) under 'URL'<br>
         3. Press 'DELETE'<br>
         - If the request succeeds, the result field will be updated to "200"<br>
-        - If the Result field says "400", the entered short URL does not exist<br>
+        - If the Result field says "400", the entered short URL does not exist
+    </p>
+    <h2>Shutdown Backend</h2>
+    <p>
+        1. Enter your API Key under Authorization<br>
+        2. Press the 'Suicide' button<br>
+        3. Press the 'OPTIONS' button
     </p>
 
 </body>

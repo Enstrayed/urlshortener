@@ -1,0 +1,18 @@
+:8128 {
+    reverse_proxy * localhost:8127
+
+    handle @staticpaths {
+        root * C:/Users/natha/Desktop/urlshortener/frontend/
+        file_server
+        respond /favicon.ico 200
+        respond /robots.txt "Disallow: /"
+    }
+
+    @staticpaths {
+        path /
+        path /urlshortener.js
+        path /index.css
+        path /favicon.ico
+        path /robots.txt
+    }
+}
