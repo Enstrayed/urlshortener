@@ -34,7 +34,7 @@ function updateResultField(content) {
 }
 
 function buttonPostRequest() {
-    fetch(`http://localhost:8128/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}&url=${document.getElementById("valuefield").value}`, {method: 'POST'}).then(res => {
+    fetch(`https://etyd.cc/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}&url=${document.getElementById("valuefield").value}`, {method: 'POST'}).then(res => {
         updateResultField(res.status)
     }).catch(error => {
         updateResultField(error)
@@ -42,7 +42,7 @@ function buttonPostRequest() {
 }
 
 function buttonDeleteRequest() {
-    fetch(`http://localhost:8128/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}`, {method: 'DELETE'}).then(res => {
+    fetch(`https://etyd.cc/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}`, {method: 'DELETE'}).then(res => {
         updateResultField(res.status);
     }).catch(error => {
         updateResultField(error)
@@ -50,7 +50,7 @@ function buttonDeleteRequest() {
 }
 
 function buttonOptionsRequest() {
-    fetch(`http://localhost:8128/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}`, {method: 'OPTIONS'}).then(res => {
+    fetch(`https://etyd.cc/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}`, {method: 'OPTIONS'}).then(res => {
         updateResultField(res.status);
     }).catch(error => {
         updateResultField(error)
