@@ -1,5 +1,5 @@
 function buttonCopyResult() {
-    navigator.clipboard.writeText(`https://etyd.cc/${document.getElementById("valuefield").value}`)
+    navigator.clipboard.writeText(`https://etyd.cc/${document.getElementById("urlfield").value}`)
     document.getElementById("copyconfirmation").style.display = "";
 }
 
