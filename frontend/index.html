@@ -13,7 +13,7 @@
 
     <!--Input-->
     <label for="auth">Authorization:</label><br>
-    <input type="password" id="authfield"><br>
+    <input type="password" id="authfield" data-bwautofill><br>
     <label for="url">URL:</label><br>
     <input type="text" id="urlfield">
     <button onclick="buttonFillRandom()">Random</button>
@@ -23,35 +23,23 @@
     <button onclick="buttonFillFromClipboard()">Clipboard</button><br><br>
     <button onclick="buttonPostRequest()">POST</button>
     <button onclick="buttonDeleteRequest()">DELETE</button>
-    <button>OPTIONS</button><br><br>
-    <b>Result: </b><a id="resultfield">😺</a><br><br>
-    <button>Re-random & POST</button>
-    <button onclick="buttonCopyResult()">Copy Result</button>
+    <button onclick="buttonOptionsRequest()">OPTIONS</button>
+    <button onclick="buttonCopyResult()">Copy Shortened URL</button>
+    <label id="copyconfirmation" style="display: none;">OK</label><br><br>
+    <b>Result: </b><a id="resultfield"><img src="https://cdn.enstrayed.com/miau.jpg" width="14"></a>
+    
     <hr>
 
     <!--Details-->
-    <h2>Create a Shortened URL</h2>
+    <h2>Status Code Reference</h2>
     <p>
-        1. Enter your API Key under Authorization<br>
-        2. Either press 'Random' to create a random URL or enter one yourself<br>
-        3. Enter the target URL under 'Value' or press 'Clipboard' to have it pulled from your clipboard<br>
-        4. Press 'POST' to submit the shortened URL<br>
-        - If the request succeeds, the result field will be updated with the shortened URL<br>
-        - If the Result field says "409", then the shortened URL already exists, press 'Re-Random & POST' to retry
-    </p>
-    <h2>Delete a Shortened URL</h2>
-    <p>
-        1. Enter your API Key under Authorization<br>
-        2. Enter the shortened URL (without etyd.cc/) under 'URL'<br>
-        3. Press 'DELETE'<br>
-        - If the request succeeds, the result field will be updated to "200"<br>
-        - If the Result field says "400", the entered short URL does not exist
-    </p>
-    <h2>Shutdown Backend</h2>
-    <p>
-        1. Enter your API Key under Authorization<br>
-        2. Press the 'Suicide' button<br>
-        3. Press the 'OPTIONS' button
+        200: OK - If you see this after an OPTIONS request it either worked or did nothing<br>
+        400: Bad Request - You will see this if you try and delete a non-existent URL<br>
+        401: Unauthorized - Did you enter your API key?<br>
+        405: Method Not Allowed - You will see this if you try a request with no arguments<br>
+        409: Conflict - The entered URL already exists, click 'Random' and try again<br>
+        500: Internal Server Error - If this happens something has gone very wrong<br>
+        502: Bad Gateway - If you see this the backend is down/unreachable by Caddy<br>
     </p>
 
 </body>

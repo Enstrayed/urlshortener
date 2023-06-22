@@ -78,8 +78,8 @@ app.post('/:url', (rreq,rres) => {
             }
         })
     } else {
-        console.log(`${rreq.query.auth}/${rreq.ip} POST ${rreq.url} returned 403`)
-        rres.sendStatus(403);
+        console.log(`${rreq.query.auth}/${rreq.ip} POST ${rreq.url} returned 401`)
+        rres.sendStatus(401);
     }
 
     
@@ -112,8 +112,8 @@ app.delete('/:url', (rreq,rres) => {
             }
         })
     } else {
-        console.log(`${rreq.query.auth}/${rreq.ip} DELETE ${rreq.url} returned 403`)
-        rres.sendStatus(403);
+        console.log(`${rreq.query.auth}/${rreq.ip} DELETE ${rreq.url} returned 1`)
+        rres.sendStatus(401);
     }
 
     
@@ -128,13 +128,13 @@ app.options('/suicide', (rreq,rres) => {
         console.log(`Goodbye Cruel World!`)
         process.exit(0);
     } else {
-        console.log(`${rreq.query.auth}/${rreq.ip} OPTIONS /suicide returned 403`)
-        rres.sendStatus(403);
+        console.log(`${rreq.query.auth}/${rreq.ip} OPTIONS /suicide returned 401`)
+        rres.sendStatus(401);
     }
 
     
 })
 
 
-
+console.log(`Started on ${port}`)
 app.listen(port);
