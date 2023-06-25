@@ -1,5 +1,5 @@
 function buttonCopyResult() {
-    navigator.clipboard.writeText(`https://etyd.cc/${document.getElementById("urlfield").value}`)
+    navigator.clipboard.writeText(`${document.location.href}${document.getElementById("urlfield").value}`)
     document.getElementById("copyconfirmation").style.display = "";
 }
 
@@ -7,10 +7,6 @@ function buttonFillFromClipboard() {
     navigator.clipboard.readText().then(res => {
         document.getElementById("valuefield").value = res;
     })
-}
-
-function buttonFillSuicide() {
-    document.getElementById("urlfield").value = "suicide";
 }
 
 function makeRandomHex(length) {
@@ -34,7 +30,7 @@ function updateResultField(content) {
 }
 
 function buttonPostRequest() {
-    fetch(`https://etyd.cc/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}&url=${document.getElementById("valuefield").value}`, {method: 'POST'}).then(res => {
+    fetch(`${document.location.href}${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}&url=${document.getElementById("valuefield").value}`, {method: 'POST'}).then(res => {
         updateResultField(res.status)
     }).catch(error => {
         updateResultField(error)
@@ -42,15 +38,7 @@ function buttonPostRequest() {
 }
 
 function buttonDeleteRequest() {
-    fetch(`https://etyd.cc/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}`, {method: 'DELETE'}).then(res => {
-        updateResultField(res.status);
-    }).catch(error => {
-        updateResultField(error)
-    })
-}
-
-function buttonOptionsRequest() {
-    fetch(`https://etyd.cc/${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}`, {method: 'OPTIONS'}).then(res => {
+    fetch(`${document.location.href}${document.getElementById("urlfield").value}?auth=${document.getElementById("authfield").value}`, {method: 'DELETE'}).then(res => {
         updateResultField(res.status);
     }).catch(error => {
         updateResultField(error)
