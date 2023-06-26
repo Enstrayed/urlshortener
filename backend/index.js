@@ -2,40 +2,21 @@ const express = require('express'); // Init Express
 const res = require('express/lib/response');
 const app = express();
 
+const fs = require('fs'); // Init FS Support
+
+const globalSettings = JSON.parse(fs.readFileSync('settings.json','utf-8')) // Load settings file
+
 const Redis = require('ioredis'); // Init Redis
 const db = new Redis({
-    host: 'rosebud',
-    port: 6379
+    host: globalSettings.redisHost,
+    port: globalSettings.redisPort
 })
 
-// copy pasted from bike-api lol
-const fs = require('fs'); // Provides filesystem modification
-const randkey = require('random-key') // Provides "random" API key generation
+const auth = require('./auth.js') // Init Authentication Functions
 
-const port = 8127;
+auth.startup();
 
-// copy pasted from bike-api lol
-allowedAuths = JSON.parse(fs.readFileSync('authorization.json', 'utf8'));
-if (allowedAuths.regenerateKeys === true) {
-    allowedAuths.allowedKeys = []; //empty allowedkeys
-    allowedAuths.allowedKeys.push(randkey.generate(25)); //push 3 fresh keys
-    allowedAuths.allowedKeys.push(randkey.generate(25));
-    allowedAuths.allowedKeys.push(randkey.generate(25));
-    allowedAuths.regenerateKeys = false; //dont repeat this on next start
 
-    fs.writeFileSync('authorization.json', JSON.stringify(allowedAuths)); //write that to disk
-    console.log(`Regenerated and wrote new API keys`);
-}
-
-// copy pasted from bike-api lol
-//yes
-function checkAuth(auth) {
-    if (allowedAuths.allowedKeys.includes(auth)) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 app.get('/:url', (rreq,rres) => {
 
@@ -43,10 +24,8 @@ app.get('/:url', (rreq,rres) => {
 
     db.get(requestUrl[0]).then(res => {
         if (res == null) {
-            console.log(`${rreq.query.auth}/${rreq.ip} GET ${requestUrl[0]} returned 404`)
             rres.sendStatus(404);
         } else {
-            //not logging this shit
             rres.redirect(res);
         }
     })
@@ -54,12 +33,9 @@ app.get('/:url', (rreq,rres) => {
 });
 
 
-// Write URL redirects to database
-// TODO:
-// - Authentication
 app.post('/:url', (rreq,rres) => {
 
-    if (checkAuth(rreq.query.auth) == true) {
+    if (auth.checkKey(1,rreq.query.auth) == true) {
         requestUrl = rreq.url.split("?") //sanitize against queries
 
         db.get(requestUrl[0]).then(res => {
@@ -88,7 +64,7 @@ app.post('/:url', (rreq,rres) => {
 
 app.delete('/:url', (rreq,rres) => {
 
-    if (checkAuth(rreq.query.auth) == true) {
+    if (auth.checkKey(2,rreq.query.auth) == true) {
         requestUrl = rreq.url.split("?") //sanitize against queries
 
         db.get(requestUrl[0]).then(res => {
@@ -120,21 +96,5 @@ app.delete('/:url', (rreq,rres) => {
 
 })
 
-app.options('/suicide', (rreq,rres) => {
-
-    if (checkAuth(rreq.query.auth) == true) {
-        rres.sendStatus(200);
-        console.log(`${rreq.query.auth}/${rreq.ip} OPTIONS /suicide returned 200`)
-        console.log(`Goodbye Cruel World!`)
-        process.exit(0);
-    } else {
-        console.log(`${rreq.query.auth}/${rreq.ip} OPTIONS /suicide returned 401`)
-        rres.sendStatus(401);
-    }
-
-    
-})
-
-
-console.log(`Started on ${port}`)
-app.listen(port);
+console.log(`Started on ${globalSettings.nodePort}`)
+app.listen(globalSettings.nodePort);

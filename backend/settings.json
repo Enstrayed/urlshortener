@@ -1,0 +1,7 @@
+{
+    "redisHost": "rosebud",
+    "redisPort": 6379,
+    "nodePort": 8127,
+    "regenerateKeys": true,
+    "masterKey": "miau"
+}
