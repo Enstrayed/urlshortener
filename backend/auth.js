@@ -1,7 +1,4 @@
-tierOneKeys = []
-tierTwoKeys = []
-tierThreeKeys = []
-keyTiers = [tierOneKeys,tierTwoKeys,tierThreeKeys]
+const index = require('./index')
 
 function startup() {
     if (globalSettings.clearAndRegenKeys == true) {
@@ -71,34 +68,14 @@ function keyEncoderDecoder(operation,target) {
     }
 }
 
-function checkKey(tier,key) {
-    switch (tier) {
-        case 1:
-            if (tierOneKeys.includes(key) == true || tierTwoKeys.includes(key) || tierThreeKeys.includes(key)) {
-                return true;
-            } else {
-                return false;
-            }
-
-        case 2:
-            if (tierTwoKeys.includes(key) == true || tierThreeKeys.includes(key)) {
-                return true;
-            } else {
-                return false;
-            }
-
-        case 3:
-            if (tierThreeKeys.includes(key) == true) {
-                return true;
-            } else {
-                return false;
-            }
-
-        default:
-            return false;
+function checkKey(receivedKey) {
+    if (receivedKey.includes(index.keyArray) || receivedKey == index.masterKey) {
+        return true;
+    } else {
+        return false;
     }
 }
 
 
 
-module.exports={startup, checkKey}
+module.exports={keyEncoderDecoder, checkKey}

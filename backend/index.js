@@ -12,9 +12,15 @@ const db = new Redis({
     port: globalSettings.redisPort
 })
 
+const masterKey = globalSettings.masterKey // 
+db.get("apiKeys").then(res => {
+    keyArrays = res.split(',')
+    module.exports={keyArrays}
+})
+module.exports={masterKey}
 const auth = require('./auth.js') // Init Authentication Functions
+console.log(`Retreived and set API Keys: ${keyArrays}`)
 
-auth.startup();
 
 
 
