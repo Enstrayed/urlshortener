@@ -1,0 +1,26 @@
+version: '3.0'
+
+services:
+  etydbackend:
+    build:
+      context: ./backend/
+    image: etydbackend
+    container_name: etydbackend
+    restart: unless-stopped
+    volumes:
+      - ./backend/:/app
+    ports:
+      - 8127:8127
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    container_name: etydcaddy
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./frontend/:/srv
+      - ./caddy/data:/data
+      - ./caddy/config:/config

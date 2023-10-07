@@ -1,5 +1,5 @@
 :8128 {
-    reverse_proxy * localhost:8127
+    reverse_proxy * etydbackend:8127
 
     handle @staticpaths {
         root * C:/Users/natha/Desktop/urlshort/frontend/
