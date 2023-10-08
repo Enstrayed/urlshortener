@@ -9,8 +9,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./backend/:/app
-    ports:
-      - 8127:8127
   caddy:
     image: caddy:latest
     restart: unless-stopped
