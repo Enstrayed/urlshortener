@@ -44,7 +44,7 @@ app.get('/:url', (rreq,rres) => {
     db.get(requestUrl[0]).then(res => {
         if (res == null) {
             console.log(`${rreq.query.auth}/${rreq.ip} GET ${requestUrl[0]} returned 404`)
-            rres.sendStatus(404);
+            rres.status(404).send(`<style>.text{font-family: Arial, Helvetica, sans-serif;}</style><h1 class="text">etyd.cc Error</h1><p class="text">Requested URL not found.</p>`);
         } else {
             //not logging this shit
             rres.redirect(res);
