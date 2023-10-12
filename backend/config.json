@@ -1,0 +1,11 @@
+{
+    "redisServer": "rosebud",
+    "redisPort": 6379,
+
+    "regenerateAuthKeys": false,
+    "authKeysRedisKey": "etydauthkeys",
+    "authKeyAmount": 3,
+    "authKeyLength": 25,
+
+    "apiPort": 8127
+}
