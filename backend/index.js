@@ -20,7 +20,7 @@ app.get('/:url', (rreq,rres) => {
 
     db.get(requestUrl[0]).then(res => {
         if (res == null) {
-            console.log(`${rreq.query.auth}/${rreq.ip} GET ${requestUrl[0]} returned 404`)
+            console.log(`${rreq.query.auth}/${rreq.get("cf-connecting-ip")} GET ${requestUrl[0]} returned 404`)
             rres.status(404).send(`<style>.text{font-family: Arial, Helvetica, sans-serif;}</style><h1 class="text">etyd.cc Error</h1><p class="text">Requested URL not found.</p>`);
         } else {
             //not logging this shit
@@ -38,18 +38,18 @@ app.post('/:url', (rreq,rres) => {
             let requestUrl = rreq.url.split("?") //sanitize against queries
             db.get(requestUrl[0]).then(res => {
                 if (res != null) {
-                    console.log(`${rreq.query.auth}/${rreq.ip} POST   ${requestUrl[0]} returned 409`)
+                    console.log(`${rreq.query.auth}/${rreq.get("cf-connecting-ip")} POST   ${requestUrl[0]} returned 409`)
                     rres.sendStatus(409);
                 } else {
                     db.set(requestUrl[0],rreq.query.url)
                     db.get(requestUrl[0]).then(res => {
-                        console.log(`${rreq.query.auth}/${rreq.ip} POST   ${requestUrl[0]} returned ${res}`)
+                        console.log(`${rreq.query.auth}/${rreq.get("cf-connecting-ip")} POST   ${requestUrl[0]} returned ${res}`)
                         rres.send(res);
                     })
                 }
             })
         } else {
-            console.log(`${rreq.query.auth}/${rreq.ip} POST   ${rreq.url.split("?")[0]} returned 401`)
+            console.log(`${rreq.query.auth}/${rreq.get("cf-connecting-ip")} POST   ${rreq.url.split("?")[0]} returned 401`)
             rres.sendStatus(401);
         }
     })
@@ -63,7 +63,7 @@ app.delete('/:url', (rreq,rres) => {
             let requestUrl = rreq.url.split("?")
             db.get(requestUrl[0]).then(res => {
                 if (res == null) {
-                    console.log(`${rreq.query.auth}/${rreq.ip} DELETE ${requestUrl[0]} returned 400`)
+                    console.log(`${rreq.query.auth}/${rreq.get("cf-connecting-ip")} DELETE ${requestUrl[0]} returned 400`)
                     rres.sendStatus(400);
                 } else {
                     
@@ -71,10 +71,10 @@ app.delete('/:url', (rreq,rres) => {
     
                     db.get(requestUrl[0]).then(res => {
                         if (res == null) {
-                            console.log(`${rreq.query.auth}/${rreq.ip} DELETE ${requestUrl[0]} returned 200`)
+                            console.log(`${rreq.query.auth}/${rreq.get("cf-connecting-ip")} DELETE ${requestUrl[0]} returned 200`)
                             rres.sendStatus(200);
                         } else { //if this happens something has gone TERRIBLY wrong
-                            console.log(`⚠️ ${rreq.query.auth}/${rreq.ip} DELETE ${requestUrl[0]} returned 500`)
+                            console.log(`⚠️ ${rreq.query.auth}/${rreq.get("cf-connecting-ip")} DELETE ${requestUrl[0]} returned 500`)
                             rres.sendStatus(500);
                         }
                     })
@@ -82,7 +82,7 @@ app.delete('/:url', (rreq,rres) => {
                 }
             })
         } else {
-            console.log(`${rreq.query.auth}/${rreq.ip} DELETE ${rreq.url.split("?")[0]} returned 401`)
+            console.log(`${rreq.query.auth}/${rreq.get("cf-connecting-ip")} DELETE ${rreq.url.split("?")[0]} returned 401`)
             rres.sendStatus(401);
         }
     })    
